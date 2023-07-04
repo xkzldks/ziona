@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang ="en">
+<head>
+    <meta charset = "UTF-8">
+    <meta name = "viewport" content="width=device-width, initial-scale=1.0">
+    <title>Window Popup</title>
+    <meta name="description"content="">
+    <meta name="keywords"content="">
+    <style>
+        *{padding:0;margin:0;}
+
+        #pop_container{
+            font-family:'NotoSans','맑은고딕','MalgunGothic',"돋움",dotum,arial,sans-serif;
+            text-align:center;
+            position:relative;
+        }
+        .top{
+            position:relative;
+            display:flex;
+            justify-content:space-between;
+            padding:0.5rem1.4rem;
+            background-color:#fdd000;
+            vertical-align:middle;
+        }
+        h1.infoTit{
+            font-size:20px;
+            color:#ffffff;
+        }
+        main.textBox{
+            padding-top:3.4em;
+            text-align:center;
+        }
+        h2.tit{
+            font-size:1.6em;
+            letter-spacing:-2px;
+            font-weight:bold;
+            line-height:1.5em;
+        }
+        p{
+            line-height:1.8em;
+        }
+        p.textContents{
+            margin:1.5em1.8em;
+            font-size:1.1em;
+            font-weight:200;
+        }
+
+        footer{
+            position:absolute;
+            bottom:0;
+            width:100%;
+            background-color:#dddddd;
+        }
+        footer.btnBox_todayClose{
+            padding:0.5rem00.7rem;
+            display:flex;
+            justify-content:flex-end;
+        }
+        form{padding-right:2rem;}
+            input#chkday{
+            width:17px;
+            height:17px;
+            vertical-align:middle;
+        }
+        label{vertical-align:middle;}
+</style>
+</head>
+<body>
+<div id="popup">
+<header class="top">
+<h1 class="infoTit">안내</h1>
+</header>
+<main class="textBox">
+<h2 class="tit">타이틀</h2>
+<p class="textContents">
+버튼에해당하는상세내용을보여주는영역입니다.<br/>
+여기에 공지 및 안내 내용을 입력하세요. 버튼에 해당하는 상세 내용을 보여주는 영역입니다.
+여기에 공지 및 안내 내용을 입력하세요. 버튼에 해당하는 상세 내용을 보여주는 영역입니다.
+여기에 공지 및 안내 내용을 입력하세요. 버튼에 해당하는 상세 내용을 보여주는 영역입니다.
+여기에 공지 및 안내 내용을 입력하세요. 버튼에 해당하는 상세 내용을 보여주는 영역입니다.
+<p><strong>적용기간:2020.12.01~12.31</strong></p>
+<p>-000일동올림-</p>
+</p>
+</main>
+
+</div>
+<footer class= "btnBox_todayClose">
+<form method="post"action=""name="pop_form">
+<span id="check"><input type="checkbox"value="checkbox"name="chkbox"id="chkday"/>
+<label for="chkday">오늘하루동안보지않기</label>
+</span>
+</form>
+</footer>
+</body>
+</html>

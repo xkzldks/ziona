@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <!-- Webpage Title -->
+    <title>진주교회 시온</title>
+
+    <meta property="og:title" content="2022시온" />
+    <meta property="og:description" content="출석그래프" />
+    <meta property="og:image" content="{{ url_for('static', filename='ogimage.png') }}" />
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+
+    <!-- 구글폰트 -->
+    <link href="https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+                    showReview();
+                });
+
+        function makeReview() {
+                        let title = $('#title').val()
+                        let review = document.getElementById('result').innerText + " "+$('#new').val()
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/review",
+                            data: {title_give:title, review_give:review},
+                            success: function (response) {
+                                alert(response["msg"]);
+                                window.location.reload();
+                            }
+                        })
+                    }
+
+        function showReview() {
+                        $.ajax({
+                            type: "GET",
+                            url: "/review",
+                            data: {},
+                            success: function (response) {
+                                let reviews = response['all_reviews']
+                                for (let i = 0; i < reviews.length; i++){
+                                    let title = reviews[i]['title']
+                                    let review = reviews[i]['review']
+
+                                    let temp_html = `<tr>
+                                                        <td>${title}</td>
+                                                        <td>${review}</td>
+                                                    </tr>`
+                                    $('#reviews-box').append(temp_html)
+                                }
+                            }
+                        })
+                    }
+    </script>
+
+    <style type="text/css">
+            * {
+                font-family: "Do Hyeon", sans-serif;
+            }
+
+            #daemoon_font{
+               display: inline;
+            }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <div style = "float:left">
+        <img id = "daemoon" src="http://www.jj21.kr/files/attach/images/112/078e1e009a58079fbc48db04a987b9ec.gif"  width ="90" height ="30" alt="">
+    </div>
+    <div id = "daemoon_font">
+        <h3 style = "text-align: center"> 시온청년부_출석체크사이트</h3>
+    </div>
+
+    <div class="info">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">날짜</span>
+            </div>
+            <textarea class="form-control" id="title"
+                      cols="30"
+                      rows="1" placeholder="날짜를 입력 예) 2022.04.22이면 0422"></textarea>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">텍스트로 추가</span>
+            </div>
+            <textarea class="form-control" id="new"
+                      cols="30"
+                      rows="1" placeholder="새로온 사람 또는 아래 명단에 없는 사람, 혹은 해당 날짜의 값을 변경하기위해 입력"></textarea>
+        </div>
+<!--        <form action='peoplelist.jsp', method = "get">-->
+            <p>새가족팀</p>
+            <label><input type='checkbox' name='새가족팀' value='장소망' >장소망</label>
+            <label><input type='checkbox' name='새가족팀' value='황기쁨' >황기쁨</label>
+            <label><input type='checkbox' name='새가족팀' value='이평안' >이평안</label>
+            <label><input type='checkbox' name='새가족팀' value='김명철' >김명철</label>
+            <br>
+            <br>
+            <p>우리조 - 민우조</p>
+            <label><input type='checkbox' name='우리조' value='손민우' >손민우</label>
+            <label><input type='checkbox' name='우리조' value='강재희' >강재희</label>
+            <label><input type='checkbox' name='우리조' value='고주황' >고주황</label>
+            <label><input type='checkbox' name='우리조' value='김성훈' >김성훈</label>
+            <label><input type='checkbox' name='우리조' value='김창민' >김창민</label>
+            <label><input type='checkbox' name='우리조' value='박희선' >박희선</label>
+            <label><input type='checkbox' name='우리조' value='성영민' >성영민</label>
+            <label><input type='checkbox' name='우리조' value='이종민' >이종민</label>
+            <label><input type='checkbox' name='우리조' value='정기욱' >정기욱</label>
+            <label><input type='checkbox' name='우리조' value='정주영' >정주영</label>
+            <label><input type='checkbox' name='우리조' value='조동욱' >조동욱</label>
+            <br>
+            <br>
+            <p>도형이가 대장이조 - 도형조</p>
+            <label><input type='checkbox' name='도형조' value='김도형' >김도형</label>
+            <label><input type='checkbox' name='도형조' value='김도연' >김도연</label>
+            <label><input type='checkbox' name='도형조' value='김유빈' >김유빈</label>
+            <label><input type='checkbox' name='도형조' value='박동건' >박동건</label>
+            <label><input type='checkbox' name='도형조' value='박주연' >박주연</label>
+            <label><input type='checkbox' name='도형조' value='석민진' >석민진</label>
+            <label><input type='checkbox' name='도형조' value='윤세림' >윤세림</label>
+            <label><input type='checkbox' name='도형조' value='이성은' >이성은</label>
+            <label><input type='checkbox' name='도형조' value='이은재' >이은재</label>
+            <label><input type='checkbox' name='도형조' value='장세훈' >장세훈</label>
+            <label><input type='checkbox' name='도형조' value='정기혁' >정기혁</label>
+            <label><input type='checkbox' name='도형조' value='최종훈' >최종훈</label>
+            <br>
+            <br>
+            태경조<br>
+            <label><input type='checkbox' name='태경조' value='김태경' >김태경</label>
+            <label><input type='checkbox' name='태경조' value='김시현' >김시현</label>
+            <label><input type='checkbox' name='태경조' value='김해리' >김해리</label>
+            <label><input type='checkbox' name='태경조' value='박미선' >박미선</label>
+            <label><input type='checkbox' name='태경조' value='성종훈' >성종훈</label>
+            <label><input type='checkbox' name='태경조' value='이예지' >이예지</label>
+            <label><input type='checkbox' name='태경조' value='정윤서' >정윤서</label>
+            <label><input type='checkbox' name='태경조' value='조정완' >조정완</label>
+            <label><input type='checkbox' name='태경조' value='최종현' >최종현</label>
+            <label><input type='checkbox' name='태경조' value='허동진' >허동진</label>
+            <br>
+            <br>
+            임원조<br>
+            <label><input type='checkbox' name='임원조' value='민강홍' >민강홍</label>
+            <label><input type='checkbox' name='임원조' value='강상혁' >강상혁</label>
+            <label><input type='checkbox' name='임원조' value='강영빈' >강영빈</label>
+            <label><input type='checkbox' name='임원조' value='강평강' >강평강</label>
+            <label><input type='checkbox' name='임원조' value='김상현' >김상현</label>
+            <label><input type='checkbox' name='임원조' value='김해인' >김해인</label>
+            <label><input type='checkbox' name='임원조' value='박근태' >박근태</label>
+            <label><input type='checkbox' name='임원조' value='석유진' >석유진</label>
+            <label><input type='checkbox' name='임원조' value='손준우' >손준우</label>
+            <label><input type='checkbox' name='임원조' value='신기원' >신기원</label>
+            <label><input type='checkbox' name='임원조' value='이루빈' >이루빈</label>
+            <label><input type='checkbox' name='임원조' value='이병욱' >이병욱</label>
+            <label><input type='checkbox' name='임원조' value='이선우' >이선우</label>
+            <label><input type='checkbox' name='임원조' value='홍성복' >홍성복</label>
+            <label><input type='checkbox' name='임원조' value='박지강' >박지강</label>
+            <br>
+            <br>
+            스무살<br>
+            <label><input type='checkbox' name='스무살' value='강수진' />강수진</label>
+            <label><input type='checkbox' name='스무살' value='김민회' />김민회</label>
+            <label><input type='checkbox' name='스무살' value='류재준' />류재준</label>
+            <label><input type='checkbox' name='스무살' value='서철규' />서철규</label>
+            <label><input type='checkbox' name='스무살' value='윤현서' />윤현서</label>
+            <label><input type='checkbox' name='스무살' value='이성민' />이성민</label>
+            <label><input type='checkbox' name='스무살' value='임도협' />임도협</label>
+            <label><input type='checkbox' name='스무살' value='하성민' />하성민</label>
+            <br>
+            <br>
+            군인<br>
+            <label><input type='checkbox' name='군인조' value='김성빈' />김성빈</label>
+            <label><input type='checkbox' name='군인조' value='김태현' />김태현</label>
+            <label><input type='checkbox' name='군인조' value='정기영' />정기영</label>
+            <label><input type='checkbox' name='군인조' value='정기훈' />정기훈</label>
+            <label><input type='checkbox' name='군인조' value='정원빈' />정원빈</label>
+            <label><input type='checkbox' name='군인조' value='홍한빛' />홍한빛</label>
+            <br>
+            <br>
+            보고싶조<br>
+            <label><input type='checkbox' name='보고싶조' value='강보라' />강보라</label>
+            <label><input type='checkbox' name='보고싶조' value='곽송하' />곽송하</label>
+            <label><input type='checkbox' name='보고싶조' value='김령태' />김령태</label>
+            <label><input type='checkbox' name='보고싶조' value='김예원' />김예원</label>
+            <label><input type='checkbox' name='보고싶조' value='김지민' />김지민</label>
+            <label><input type='checkbox' name='보고싶조' value='김현섭' />김현섭</label>
+            <label><input type='checkbox' name='보고싶조' value='김희정' />김희정</label>
+            <label><input type='checkbox' name='보고싶조' value='문지헌' />문지헌</label>
+            <label><input type='checkbox' name='보고싶조' value='박소미' />박소미</label>
+            <label><input type='checkbox' name='보고싶조' value='박수영' />박수영</label>
+            <label><input type='checkbox' name='보고싶조' value='박은송' />박은송</label>
+            <label><input type='checkbox' name='보고싶조' value='박재홍' />박재홍</label>
+            <label><input type='checkbox' name='보고싶조' value='박찬미' />박찬미</label>
+            <label><input type='checkbox' name='보고싶조' value='설경미' />설경미</label>
+            <label><input type='checkbox' name='보고싶조' value='양민석' />양민석</label>
+            <label><input type='checkbox' name='보고싶조' value='양은비' />양은비</label>
+            <label><input type='checkbox' name='보고싶조' value='유신애' />유신애</label>
+            <label><input type='checkbox' name='보고싶조' value='이신무' />이신무</label>
+            <label><input type='checkbox' name='보고싶조' value='이영재' />이영재</label>
+            <label><input type='checkbox' name='보고싶조' value='임희연' />임희연</label>
+            <label><input type='checkbox' name='보고싶조' value='정주은' />정주은</label>
+            <label><input type='checkbox' name='보고싶조' value='조윤아' />조윤아</label>
+            <label><input type='checkbox' name='보고싶조' value='조지현' />조지현</label>
+            <br>
+            <br>
+            <button onclick='getCheckboxValue()'>명단저장</button>
+        <label id='result'></label>
+
+<!--        </form>-->
+<!--        <div class="review">-->
+<!--            <button onclick="makeReview()" type="button" class="btn btn-primary">확인</button>-->
+<!--        </div>-->
+    </div>
+    <div class="reviews">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">날짜</th>
+                <th scope="col">명단</th>
+            </tr>
+            </thead>
+            <tbody id="reviews-box">
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+
+</html>

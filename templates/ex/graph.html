@@ -1,0 +1,74 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawChart_new);
+      google.charts.setOnLoadCallback(drawChart_minwoo);
+      google.charts.setOnLoadCallback(drawChart_dohyeong);
+      google.charts.setOnLoadCallback(drawChart_teagyeong);
+      google.charts.setOnLoadCallback(drawChart_imwon);
+      google.charts.setOnLoadCallback(drawChart_sumusal);
+      google.charts.setOnLoadCallback(drawChart_Soldier);
+      google.charts.setOnLoadCallback(drawChart_missing);
+
+      function drawChart_new() {
+        var data_new = google.visualization.arrayToDataTable([
+          ['시온출석현황', '강수진', '김민회', '김시현', '류재준', '박유진', '박채원', '서철규', '석다정', '석민진', '신기원', '여윤서', '윤현서', '이성민', '임도협',
+                         '조시은', '정주영', '하성민', '강재희', '고주황', '박미선', '박은송', '박주연', '윤세림', '이루빈', '이선우', '임희연', '정기영', '정기훈',
+                         '정주은', '조동욱', '최종훈', '허동진', '박소미', '정원빈', '김지민', '강평강', '손준우', '이영재', '문지헌', '박동건', '조윤아', '설경미',
+                         '김성빈', '장소망', '곽송하', '김해리', '최종현', '강수진', '김민회', '김시현', '류재준', '박유진', '박채원', '서철규', '석다정', '석민진',
+                         '신기원', '여윤서', '윤현서', '이성민', '임도협', '조시은', '정주영', '하성민', '강재희', '고주황', '박미선', '박은송', '박주연', '윤세림',
+                         '이루빈', '이선우', '임희연', '정기영', '정기훈', '정주은', '조동욱', '최종훈', '허동진', '박소미', '정원빈', '김지민', '강평강', '손준우',
+                         '이영재', '문지헌', '박동건', '조윤아', '설경미', '김성빈', '장소망', '곽송하', '김해리', '최종현', '이루빈', '이선우', '임희연', '정기영',
+                         '정기훈', '정주은'],
+          ['시온출석현황',  0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0,0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0,0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0,0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0,0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0,0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0,0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0,0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0,0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+        ]);
+        var options_new = {
+          chart: {
+            title: 'aa',
+            subtitle: '',
+          }
+        };
+        var chart_new = new google.charts.Bar(document.getElementById('columnchart_new_material'));
+        chart_new.draw(data_new, google.charts.Bar.convertOptions(options_new));
+      }
+
+      function drawChart_minwoo() {
+        var data_minwoo = google.visualization.arrayToDataTable([
+          ['시온출석현황', 'a','b','c','d','e','f'],
+          ['시온출석현황', 0.5, 0.9, 0.6, 0.1, 1.5 ,2.0]
+        ]);
+        var options_minwoo = {
+          chart: {
+            title: 'bb',
+            subtitle: '',
+          }
+        };
+        var chart_minwoo = new google.charts.Bar(document.getElementById('columnchart_minwoo_material'));
+        chart_minwoo.draw(data_minwoo, google.charts.Bar.convertOptions(options_minwoo));
+      }
+
+      function drawChart_dohyeong() {
+        var data_dohyeong = google.visualization.arrayToDataTable([
+          ['시온출석현황', 'a','b','c','d','e','f'],
+          ['시온출석현황', 0.5, 0.9, 0.6, 0.1, 1.5 ,2.0]
+        ]);
+        var options_dohyeong = {
+          chart: {
+            title: 'bb',
+            subtitle: '',
+          }
+        };
+        var chart_dohyeong = new google.charts.Bar(document.getElementById('columnchart_dohyeong_material'));
+        chart_dohyeong.draw(data_dohyeong, google.charts.Bar.convertOptions(options_dohyeong));
+      }
+
+    </script>
+  </head>
+  <body>
+    <div id="columnchart_new_material" style="width: 1500px; height: 1000px;"></div>
+    <div id="columnchart_minwoo_material" style="width: 800px; height: 200px; "></div>
+    <div id="columnchart_dohyeong_material" style="width: 800px; height: 200px; "></div>
+  </body>
+</html>

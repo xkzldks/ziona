@@ -1,0 +1,53 @@
+<style type="text/css" rel="stylesheet">
+  div, input {
+   font-size:10pt;
+  }
+  input {
+   border:1px solid #C0C0C0;
+  }
+</style>
+
+<script type="text/javascript">
+
+doc = {
+'5':'일',
+'4':'이',
+'1':'삼',
+'2':'사'
+}
+  function CreateTextBox()
+  {
+   var count = document.all.txtCount.value;
+
+   //숫자인지 아닌지를 판단 (isNaN : is not a Number의 약자)
+   //숫자가 들어가면 false를 반환
+   if (!isNaN(count))//숫자를 입력한다면...
+   {
+        //개체를 생성할때마다 누적시키려면 아래의 코드를 주석처리 하세요.
+       document.getElementById("txtPanel").innerHTML = "";
+
+
+        //자식으로 넣을 태그를 만듭니다. body에 <div></div>사이에 들어갑니다.
+               for (i=0; i<count; i++)
+               {
+                   var txt = "<input type='checkbox' name='" + doc[i+1]+ " value ="+value[i+1]+"'>" +doc[i+1] + "<br/>";
+                   document.getElementById("txtPanel").innerHTML += txt;
+               }
+         }
+  }
+
+  function ClearTextBox()
+  {
+          document.getElementById("txtPanel").innerHTML = "";
+  }
+
+</script>
+
+
+<div style="border:1px solid gray; width:400px; height:20px; padding:5px;">
+          텍스트 박스의 갯수 : <input type="text" name="txtCount" size="5" style="text-align:right;" />
+
+          <input type="button" value="  생성하기  " onclick="CreateTextBox();" />
+          <input type="button" value="  전체삭제  " onclick="ClearTextBox();" />
+</div>
+<div id="txtPanel"></div>

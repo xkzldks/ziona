@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <!-- Webpage Title -->
+    <title>2022 | 시온출석</title>
+
+    <meta property="og:title" content="2022시온" />
+    <meta property="og:description" content="출석체크서비스" />
+    <meta property="og:image" content="{{ url_for('static', filename='ogimage.png') }}" />
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+
+    <!-- 구글폰트 -->
+    <link href="https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap" rel="stylesheet">
+
+    <script type="text/javascript">
+
+            $(document).ready(function () {
+                showReview();
+            });
+
+            function makeReview() {
+                let title = $('#title').val()
+                let author = $('#author').val()
+                let review = $('#bookReview').val()
+
+                $.ajax({
+                    type: "POST",
+                    url: "/review",
+                    data: {title_give:title, author_give:author, review_give:review},
+                    success: function (response) {
+                        alert(response["msg"]);
+                        window.location.reload();
+                    }
+                })
+            }
+
+            function showReview() {
+                $.ajax({
+                    type: "GET",
+                    url: "/review",
+                    data: {},
+                    success: function (response) {
+                        let reviews = response['all_reviews']
+                        for (let i = 0; i < reviews.length; i++){
+                            let title = reviews[i]['title']
+                            let author = reviews[i]['author']
+                            let review = reviews[i]['review']
+
+                            let temp_html = `<tr>
+                                                <td>${title}</td>
+                                                <td>${author}</td>
+                                                <td>${review}</td>
+                                            </tr>`
+                            $('#reviews-box').append(temp_html)
+                        }
+                    }
+                })
+            }
+
+    </script>
+
+    <style type="text/css">
+            * {
+                font-family: "Do Hyeon", sans-serif;
+            }
+
+            h1,
+            h5 {
+                display: inline;
+            }
+
+            .info {
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
+
+            .review {
+                text-align: center;
+            }
+
+            .reviews {
+                margin-top: 100px;
+            }
+
+    </style>
+</head>
+
+<body>
+<div class="container">
+<!--    <img src="C:\Users\일반\Desktop\스파르타코딩\chulseck_zion\templates\매너상단배너_시온.png"-->
+<!--         class="img-fluid" alt="Responsive image">-->
+
+    <div class="info">
+        <h1>시온 출석체크사이트</h1>
+        <h6>이곳은 시온 출석체크사이트입니다. 아래 해당란에 잘 기입해주신 후 저장버튼을 눌러주시면 아래명단리스트에 저장됩니다.</h6>
+        <h6> 날짜 - 월+일 </h6>
+        <h6> 입력상태 - 입력 x </h6>
+        <h6> 명단 - 이름만 스페이스바로 분리하여 작성, 이후 인원합계 나옴</h6>
+        <div class="input-group mb-3"><w></w>
+            <div class="input-group-prepend">
+                <span class="input-group-text">날짜</span>
+            </div>
+            <input type="text" class="form-control" id="title">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">입력상태</span>
+            </div>
+            <textarea class="form-control" id="author"
+                      cols="30"
+                      rows="1" placeholder="비워두셔도됩니다."></textarea>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">명단</span>
+            </div>
+            <textarea class="form-control" id="bookReview"
+                      cols="30"
+                      rows="5" placeholder="명단작성 예) 성영민 민강홍 정윤서 김도연 김해인 김상현"></textarea>
+        </div>
+        <div class="review">
+            <button onclick="makeReview()" type="button" class="btn btn-primary">저장</button>
+        </div>
+    </div>
+    <div class="reviews">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">날짜</th>
+                <th scope="col">입력상태</th>
+                <th scope="col">명단</th>
+            </tr>
+            </thead>
+            <tbody id="reviews-box">
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+
+</html>
+
+<!--나중에 입력상태에서 수정인지 새로 입력인지 출력하고 각 상화에 맞게 db에 접근하여 수정하도록, 그리고 날짜별로 데이터는 하나씩-->
+<!--+ 현재는 app.py안에 명단 비교할게 있는데 파일입출력으로 바꾸기-->

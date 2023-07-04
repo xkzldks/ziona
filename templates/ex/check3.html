@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <!-- Webpage Title -->
+    <title>2022 | 시온출석</title>
+
+    <meta property="og:title" content="2022시온" />
+    <meta property="og:description" content="출석체크서비스" />
+    <meta property="og:image" content="{{ url_for('static', filename='ogimage.png') }}" />
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/js/pgpopup.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+
+    <!-- 구글폰트 -->
+    <link href="https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+                    showReview();
+                });
+        let result = '';
+        let copySen = '';
+        function getCheckboxValue(){
+                            let checked_people_new ='input[name="새가족팀"]:checked';
+                            let checked_people_minwoo = 'input[name="우리조"]:checked';
+                            let checked_people_dohyeong = 'input[name="도형조"]:checked';
+                            let checked_people_teagyeong = 'input[name="태경조"]:checked';
+                            let checked_people_imwon = 'input[name="임원조"]:checked';
+                            let checked_people_sumusal = 'input[name="스무살"]:checked';
+                            let checked_people_Soldier = 'input[name="군인조"]:checked';
+                            let checked_people_missing = 'input[name="보고싶조"]:checked';
+
+                            const selectedEls_new = document.querySelectorAll(checked_people_new);
+                            const selectedEls_min = document.querySelectorAll(checked_people_minwoo);
+                            const selectedEls_do = document.querySelectorAll(checked_people_dohyeong);
+                            const selectedEls_tea = document.querySelectorAll(checked_people_teagyeong);
+                            const selectedEls_im = document.querySelectorAll(checked_people_imwon);
+                            const selectedEls_sumusal = document.querySelectorAll(checked_people_sumusal);
+                            const selectedEls_Soldier = document.querySelectorAll(checked_people_Soldier);
+                            const selectedEls_m = document.querySelectorAll(checked_people_missing);
+
+
+                            selectedEls_new.forEach((el) => {
+                                result += el.value + ' ';
+                              });
+                            selectedEls_min.forEach((el) => {
+                                result += el.value + ' ';
+                              });
+                            selectedEls_do.forEach((el) => {
+                                result += el.value + ' ';
+                              });
+                            selectedEls_tea.forEach((el) => {
+                                result += el.value + ' ';
+                              });
+                            selectedEls_im.forEach((el) => {
+                                result += el.value + ' ';
+                              });
+                            selectedEls_sumusal.forEach((el) => {
+                                result += el.value + ' ';
+                              });
+                            selectedEls_Soldier.forEach((el) => {
+                                result += el.value + ' ';
+                              });
+                            selectedEls_m.forEach((el) => {
+                                result += el.value + ' ';
+                              });
+                            document.getElementById('result').innerText = result;
+        }
+        function getDb(){
+        if(confirm("명단을 저장하시겠습니까?") == true){
+            getCheckboxValue();
+            if (document.getElementById('result').innerText == ""){
+                if(confirm("체크가 되지않았지만 명단을 저장하시겠습니까?") == true){
+                    dateCheck();
+                }
+                else{
+                    document.getElementById('result').innerText = ""
+                    result = ""
+                }
+            }
+            else{
+                dateCheck();
+            }
+        }
+    }
+        function makeReview() {
+                        let title = $('#title').val()
+                        let review = document.getElementById('result').innerText + " "+$('#new').val()
+                        $.ajax({
+                            type: "POST",
+                            url: "/review",
+                            data: {title_give:title, review_give:review},
+                            success: function (response) {
+                                alert(response["msg"]);
+                                window.location.reload();
+                            }
+                        })
+                    }
+
+        function dateCheck(){
+            if($(title).val() != ""){
+                makeReview()
+            }
+            else{
+                alert("날짜를 확인");
+            }
+        }
+        function getCheckDB(){
+            if($(title).val() == ""){
+                alert("삭제할 명단의 날짜를 입력하세요");
+            }
+            else{
+                if(confirm($(title).val()+" 명단을 삭제하시겠습니까?") == true){
+                let title = $('#title').val()
+                       $.ajax({
+                                type: "POST",
+                                url: "/dbDel",
+                                data: {title_give:title},
+                                success: function (response) {
+                                    alert(response["msg"]);
+                                    window.location.reload();
+                                }
+                            })
+                    }
+                else{
+                    document.getElementById('result').innerText = ""
+                    result = ""
+                }
+            }
+            }
+        function getCheckAddPerson(){
+        getCheckboxValue();
+            if($('#title').val() == "" ||( document.getElementById('result').innerText == "" && $('#new').val() == "")){
+                alert("삭제할 명단의 날짜와 해당 인원을 확인하세요");
+                document.getElementById('result').innerText = ""
+                result = ""
+                }
+            else{
+                if(confirm($('#title').val() + " 해당 인원의 출석기록을 추가하시겠습니까?") == true){
+                    let title = $('#title').val()
+                    let review = document.getElementById('result').innerText + " "+$('#new').val()
+                           $.ajax({
+                                    type: "POST",
+                                    url: "/personAdd",
+                                    data: {title_give:title, new_give:review},
+                                    success: function (response) {
+                                        alert(response["msg"]);
+                                        window.location.reload();
+                                    }
+                           })
+                }
+                else{
+                     document.getElementById('result').innerText = ""
+                     result = ""
+                }
+            }
+
+        }
+        function getCheckDelPerson(){
+            getCheckboxValue();
+            if($('#title').val() == "" ||( document.getElementById('result').innerText == "" && $('#new').val() == "")){
+                alert("삭제할 명단의 날짜와 해당 인원을 확인하세요");
+                document.getElementById('result').innerText = ""
+                result = ""
+                }
+            else{
+                if(confirm($('#title').val() + " 해당 인원의 출석기록을 삭제하시겠습니까?") == true){
+                    let title = $('#title').val()
+                    let review = document.getElementById('result').innerText + " "+$('#new').val()
+                           $.ajax({
+                                    type: "POST",
+                                    url: "/personDel",
+                                    data: {title_give:title, new_give:review},
+                                    success: function (response) {
+                                        alert(response["msg"]);
+                                        window.location.reload();
+                                    }
+                           })
+                }
+                else{
+                     document.getElementById('result').innerText = ""
+                     result = ""
+                }
+            }
+        }
+        function showReview() {
+                        $.ajax({
+                            type: "GET",
+                            url: "/review",
+                            data: {},
+                            success: function (response) {
+                                let reviews = response['all_reviews']
+                                for (let i = 0; i < reviews.length; i++){
+                                    let year = reviews[i]['year']
+                                    let title = reviews[i]['title']
+                                    let review = reviews[i]['review']
+                                    let count = reviews[i]['count']
+                                    let temp_html = `<tr>
+                                                        <td>${year}</td>
+                                                        <td>${title}</td>
+                                                        <td>${review}</td>
+                                                        <td>${count}</td>
+                                                    </tr>`
+                                    $('#reviews-box').append(temp_html)
+                                }
+                            }
+                        })
+                    }
+        function checkCopy() {
+        if($('#title').val() == ""){
+                alert("결과복사할 날짜를 확인하세요");
+                }
+            else{
+                if(confirm($('#title').val() + " 해당 날짜의 결과를 복사하시겠습니까?") == true){
+                    let title = $('#title').val()
+                           $.ajax({
+                                    type: "POST",
+                                    url: "/copyResult",
+                                    data: {title_give:title},
+                                    success: function () {
+                                    getCopy();
+                           }
+                    })
+                }
+                else{
+                     document.getElementById('result').innerText = ""
+                     result = ""
+                }
+            }
+        }
+        function getCopy() {
+                alert('결과복사 시작');
+                $.ajax({
+                      type: "GET",
+                      url: "/copyResult",
+                      data: {},
+                      success: function (response) {
+                      let reviews = response['review']
+                      alert(reviews);
+                      copyToClipboard(reviews);
+                      }
+                    })
+        }
+        function copyToClipboard(str) {
+            var tempElement = document.createElement("textarea");
+            document.body.appendChild(tempElement);
+            tempElement.value = str;
+            tempElement.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempElement);
+            alert('결과복사됨!');
+        }
+        function graphCalc(){
+            alert(document.getElementById("startDay").value());
+        }
+    </script>
+    <style type="text/css">
+            * {
+                font-family: "Do Hyeon", sans-serif;
+            }
+
+            .daemoon_font{
+               display: inline;
+            }
+
+            #td1 { text-align: center; }
+	        #td2 { text-align: center; }
+	        #td3 { text-align: center; }
+	        #td4 { text-align: center; }
+            #resultCopy { text-align: right; }
+            #toTop{text-align: center;}
+	        .myButtonAdd {
+                box-shadow:inset 0px 1px 0px 0px #97c4fe;
+                background:linear-gradient(to bottom, #3d94f6 5%, #1e62d0 100%);
+                background-color:#3d94f6;
+                border-radius:6px;
+                border:1px solid #337fed;
+                display:inline-block;
+                cursor:pointer;
+                color:#ffffff;
+                font-family:Arial;
+                font-size:15px;
+                font-weight:bold;
+                padding:8px 10px;
+                text-decoration:none;
+                text-shadow:0px 1px 0px #1570cd;
+            }
+            .myButtonAdd:hover {
+                background:linear-gradient(to bottom, #1e62d0 5%, #3d94f6 100%);
+                background-color:#1e62d0;
+            }
+            .myButtonAdd:active {
+                position:relative;
+                top:1px;
+            }
+
+	        .myButtonDelDB {
+                box-shadow:inset 0px 1px 0px 0px #cf866c;
+                background:linear-gradient(to bottom, #ff3700 5%, #bc3315 100%);
+                background-color:#ff3700;
+                border-radius:6px;
+                border:1px solid #942911;
+                display:inline-block;
+                cursor:pointer;
+                color:#ffffff;
+                font-family:Arial;
+                font-size:15px;
+                font-weight:bold;
+                padding:8px 10px;
+                text-decoration:none;
+                text-shadow:0px 1px 0px #854629;
+            }
+            .myButtonDelDB:hover {
+                background:linear-gradient(to bottom, #bc3315 5%, #d0451b 100%);
+                background-color:#bc3315;
+            }
+            .myButtonDelDB:active {
+                position:relative;
+                top:1px;
+            }
+
+            .myButtonEtc {
+                box-shadow:inset 0px 1px 0px 0px #ffffff;
+                background:linear-gradient(to bottom, #fffcff 5%, #f2e4f2 100%);
+                background-color:#fffcff;
+                border-radius:6px;
+                border:1px solid #5c4f5c;
+                display:inline-block;
+                cursor:pointer;
+                color:#4d384d;
+                font-family:Arial;
+                font-size:15px;
+                font-weight:bold;
+                padding:8px 10px;
+                text-decoration:none;
+                text-shadow:0px 1px 0px #ffffff;
+            }
+            .myButtonEtc:hover {
+                background:linear-gradient(to bottom, #f2e4f2 5%, #fffcff 100%);
+                background-color:#f2e4f2;
+            }
+            .myButtonEtc:active {
+                position:relative;
+                top:1px;
+            }
+    </style>
+</head>
+
+<body>
+<!--사이드 메뉴-->
+<A style="POSITION: fixed; MARGIN-LEFT: 700px; TOP: 175px; LEFT: 50%;">
+    <table style="border:0px">
+    <tr><td>
+        <a href="#" class="myButtonAdd" onclick='getDb()' >명단저장</a><br>
+        <a href="#" class= "myButtonAdd" onclick='getCheckAddPerson()' >인원추가</a><br>
+        <a href="#" class= "myButtonDelDB" onclick='getCheckDelPerson()'>인원삭제</a><br>
+        <a href="#" onclick="getCheckDB()" class="myButtonDelDB">명단삭제</a><br>
+        <a href="#" class = "myButtonEtc" onclick="checkCopy()">결과복사</a><br><br><br><br>
+        <a href="#" class = "myButtonEtc" id = "toTop" title="맨 위로">맨 위로</a>
+    </td></tr></table>
+</A>
+
+<div class="container">
+    <div style = "float:left">
+        <img id = "daemoon" src="http://www.jj21.kr/files/attach/images/112/078e1e009a58079fbc48db04a987b9ec.gif"  width ="90" height ="30" alt="">
+    </div>
+    <div id = "daemoon_font">
+        <h3 style = "float : left"> 시온청년부_출석체크사이트_</h3>
+        <script style = "float : left">
+            date = new Date().toLocaleDateString();
+            document.write(date);
+        </script>
+    </div>
+    <div class="info">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">날짜</span>
+            </div>
+            <textarea class="form-control" id="title"
+                      cols="30"
+                      rows="1" placeholder="날짜를 입력 예) 2022.04.22이면 0422"></textarea>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">새로온 사람</span>
+            </div>
+            <textarea class="form-control" id="new"
+                      cols="30"
+                      rows="1" placeholder="새로온 사람 또는 아래 명단에 없는 사람, 혹은 해당 날짜의 값을 변경하기위해 입력"></textarea>
+        </div>
+        <div>
+        <a href=#none id="showInfo" onclick="if(hide.style.display=='none') {hide.style.display='';show.innerText='▲접기'} else {hide.style.display='none';show.innerText='▶사용방법 및 추가사항(클릭)'}">▶사용방법 및 추가사항(클릭)</a>
+        <div id="hideInfo" style="display: none">
+        <p> update - 06/09 갱신기능 추가</p>
+        <p> 06/27 갱신기능 삭제, 데이터 삭제기능 추가</p>
+        <p> 명단저장 - 새 데이터 추가, 만약 해당 날짜에 저장된 데이터가 있을때 저장을 누르면 새로 넣은 데이터가 덧씌워짐</p>
+        <p> 명단삭제 - 저장된 데이터 삭제가능 ### 저장된 명단에만 가능###</p>
+        <p> 인원 추가,삭제 - 저장된 명단 중 해당하는 날짜에 추가 또는 삭제하고싶은 인원 추가 및 삭제 가능 ### 저장된 명단에만 가능###</p>
+        <p> 06/30 인원별 추가, 삭제, txt로 명단받아오기(서버 인코딩 문제로 모듈로 대체), 연습그래프 추가</p>
+        <p> 07/03 결과 클립보드 복사기능 - 날짜입력 후 결과복사버튼누르면 해당하는 날짜의 명단을 클립보드에 복사함 ### 저장된 명단에만 가능###</p>
+        <p> 추가할 것 - 그래프 마무리, 웹에서 카카오톡메세지 보내기(희망사항;)</p>
+        </div>
+        </div>
+        <div>
+            <a href=#none id="peopleDB" onclick="if(hide.style.display=='none') {hide.style.display='';show.innerText='▲접기'} else {hide.style.display='none';show.innerText='▶인원관리'}">▶인원관리</a>
+                <div id="hidePeopleDB" style="display: none">
+
+            </div>
+        </div>
+
+        <!-- 체크박스 --><hr>
+            <p>새가족팀</p>
+            <label><input type='checkbox' name='새가족팀' value='장소망' >장소망</label>
+            <label><input type='checkbox' name='새가족팀' value='황기쁨' >황기쁨</label>
+            <label><input type='checkbox' name='새가족팀' value='이평안' >이평안</label>
+            <label><input type='checkbox' name='새가족팀' value='김명철' >김명철</label>
+            <label><input type='checkbox' name='보고싶조' value='강다윗' />강다윗</label>
+            <br>
+            <br>
+            <p>우리조 - 민우조</p>
+            <label><input type='checkbox' name='우리조' value='손민우' >손민우</label>
+            <label><input type='checkbox' name='우리조' value='강재희' >강재희</label>
+            <label><input type='checkbox' name='우리조' value='고주황' >고주황</label>
+            <label><input type='checkbox' name='우리조' value='김성훈' >김성훈</label>
+            <label><input type='checkbox' name='우리조' value='김창민' >김창민</label>
+            <label><input type='checkbox' name='우리조' value='박희선' >박희선</label>
+            <label><input type='checkbox' name='우리조' value='성영민' >성영민</label>
+            <label><input type='checkbox' name='우리조' value='이종민' >이종민</label>
+            <label><input type='checkbox' name='우리조' value='정기욱' >정기욱</label>
+            <label><input type='checkbox' name='우리조' value='정주영' >정주영</label>
+            <label><input type='checkbox' name='우리조' value='조동욱' >조동욱</label>
+            <br>
+            <br>
+            <p>도형이가 대장이조 - 도형조</p>
+            <label><input type='checkbox' name='도형조' value='김도형' >김도형</label>
+            <label><input type='checkbox' name='도형조' value='김도연' >김도연</label>
+            <label><input type='checkbox' name='도형조' value='김유빈' >김유빈</label>
+            <label><input type='checkbox' name='도형조' value='박동건' >박동건</label>
+            <label><input type='checkbox' name='도형조' value='박주연' >박주연</label>
+            <label><input type='checkbox' name='도형조' value='석민진' >석민진</label>
+            <label><input type='checkbox' name='도형조' value='윤세림' >윤세림</label>
+            <label><input type='checkbox' name='도형조' value='이성은' >이성은</label>
+            <label><input type='checkbox' name='도형조' value='이은재' >이은재</label>
+            <label><input type='checkbox' name='도형조' value='장세훈' >장세훈</label>
+            <label><input type='checkbox' name='도형조' value='정기혁' >정기혁</label>
+            <label><input type='checkbox' name='도형조' value='최종훈' >최종훈</label>
+            <br>
+            <br>
+            태경조<br>
+            <label><input type='checkbox' name='태경조' value='김태경' >김태경</label>
+            <label><input type='checkbox' name='태경조' value='김시현' >김시현</label>
+            <label><input type='checkbox' name='태경조' value='김해리' >김해리</label>
+            <label><input type='checkbox' name='태경조' value='박미선' >박미선</label>
+            <label><input type='checkbox' name='태경조' value='성종훈' >성종훈</label>
+            <label><input type='checkbox' name='태경조' value='이예지' >이예지</label>
+            <label><input type='checkbox' name='태경조' value='정윤서' >정윤서</label>
+            <label><input type='checkbox' name='태경조' value='조정완' >조정완</label>
+            <label><input type='checkbox' name='태경조' value='최종현' >최종현</label>
+            <label><input type='checkbox' name='태경조' value='허동진' >허동진</label>
+            <br>
+            <br>
+            임원조<br>
+            <label><input type='checkbox' name='임원조' value='민강홍' >민강홍</label>
+            <label><input type='checkbox' name='임원조' value='강상혁' >강상혁</label>
+            <label><input type='checkbox' name='임원조' value='강영빈' >강영빈</label>
+            <label><input type='checkbox' name='임원조' value='강평강' >강평강</label>
+            <label><input type='checkbox' name='임원조' value='김상현' >김상현</label>
+            <label><input type='checkbox' name='임원조' value='김해인' >김해인</label>
+            <label><input type='checkbox' name='임원조' value='박근태' >박근태</label>
+            <label><input type='checkbox' name='임원조' value='석유진' >석유진</label>
+            <label><input type='checkbox' name='임원조' value='손준우' >손준우</label>
+            <label><input type='checkbox' name='임원조' value='신기원' >신기원</label>
+            <label><input type='checkbox' name='임원조' value='이루빈' >이루빈</label>
+            <label><input type='checkbox' name='임원조' value='이병욱' >이병욱</label>
+            <label><input type='checkbox' name='임원조' value='이선우' >이선우</label>
+            <label><input type='checkbox' name='임원조' value='홍성복' >홍성복</label>
+            <label><input type='checkbox' name='임원조' value='박지강' >박지강</label>
+            <br>
+            <br>
+            스무살<br>
+            <label><input type='checkbox' name='스무살' value='강수진' />강수진</label>
+            <label><input type='checkbox' name='스무살' value='김민회' />김민회</label>
+            <label><input type='checkbox' name='스무살' value='류재준' />류재준</label>
+            <label><input type='checkbox' name='스무살' value='서철규' />서철규</label>
+            <label><input type='checkbox' name='스무살' value='윤현서' />윤현서</label>
+            <label><input type='checkbox' name='스무살' value='이성민' />이성민</label>
+            <label><input type='checkbox' name='스무살' value='임도협' />임도협</label>
+            <label><input type='checkbox' name='스무살' value='하성민' />하성민</label>
+            <br>
+            <br>
+            군인<br>
+            <label><input type='checkbox' name='군인조' value='김성빈' />김성빈</label>
+            <label><input type='checkbox' name='군인조' value='김태현' />김태현</label>
+            <label><input type='checkbox' name='군인조' value='정기영' />정기영</label>
+            <label><input type='checkbox' name='군인조' value='정기훈' />정기훈</label>
+            <label><input type='checkbox' name='군인조' value='정원빈' />정원빈</label>
+            <label><input type='checkbox' name='군인조' value='홍한빛' />홍한빛</label>
+            <br>
+            <br>
+            보고싶조<br>
+            <label><input type='checkbox' name='보고싶조' value='강보라' />강보라</label>
+            <label><input type='checkbox' name='보고싶조' value='곽송하' />곽송하</label>
+            <label><input type='checkbox' name='보고싶조' value='김령태' />김령태</label>
+            <label><input type='checkbox' name='보고싶조' value='김예원' />김예원</label>
+            <label><input type='checkbox' name='보고싶조' value='김지민' />김지민</label>
+            <label><input type='checkbox' name='보고싶조' value='김현섭' />김현섭</label>
+            <label><input type='checkbox' name='보고싶조' value='김희정' />김희정</label>
+            <label><input type='checkbox' name='보고싶조' value='문지헌' />문지헌</label>
+            <label><input type='checkbox' name='보고싶조' value='박소미' />박소미</label>
+            <label><input type='checkbox' name='보고싶조' value='박수영' />박수영</label>
+            <label><input type='checkbox' name='보고싶조' value='박은송' />박은송</label>
+            <label><input type='checkbox' name='보고싶조' value='박재홍' />박재홍</label>
+            <label><input type='checkbox' name='보고싶조' value='박찬미' />박찬미</label>
+            <label><input type='checkbox' name='보고싶조' value='설경미' />설경미</label>
+            <label><input type='checkbox' name='보고싶조' value='양민석' />양민석</label>
+            <label><input type='checkbox' name='보고싶조' value='양은비' />양은비</label>
+            <label><input type='checkbox' name='보고싶조' value='유신애' />유신애</label>
+            <label><input type='checkbox' name='보고싶조' value='이신무' />이신무</label>
+            <label><input type='checkbox' name='보고싶조' value='이영재' />이영재</label>
+            <label><input type='checkbox' name='보고싶조' value='임희연' />임희연</label>
+            <label><input type='checkbox' name='보고싶조' value='정주은' />정주은</label>
+            <label><input type='checkbox' name='보고싶조' value='조윤아' />조윤아</label>
+            <label><input type='checkbox' name='보고싶조' value='조지현' />조지현</label>
+            <br>
+            <br>
+            <div class="input-group-prepend">
+                <a href="#" class="myButtonAdd" onclick='getDb()' >명단저장</a>
+               <hr>
+            <a href="#" class= "myButtonAdd" onclick='getCheckAddPerson()' >인원추가</a>
+            <a href="#" class= "myButtonDelDB" onclick='getCheckDelPerson()'>인원삭제</a>
+
+            <label id='result'></label>
+            <hr>
+                <a href="#" onclick='getCheckDB()'class="myButtonDelDB">명단삭제</a>
+            </div>
+        <a href ="#" class = "myButtonEtc" onclick="checkCopy()">결과복사</a>
+        <a href = "#" onclick="ㅇㄷ.html">asdf</a>
+        <hr>
+        <resultCopy>
+            <div>
+                <a>시작날짜</a>
+                <input type="date" id="startDay"><br>
+                <a>끝 날짜</a>
+                <input type="date" id="endDay">
+            </div>
+        </resultCopy>
+        <a onclick="graphCalc()" class = "myButtonEtc" >그래프</a>
+        </div>
+    <div class="reviews">
+        <table class="table">
+            <thead>
+            <tr>
+                <th id = "td1" scope="col">년도</th>
+                <th id = "td2" scope="col">날짜</th>
+                <th id = "td3" scope="col">명단</th>
+                <th id = "td4" scope="col">인원</th>
+            </tr>
+            </thead>
+            <tbody id="reviews-box">
+            </tbody>
+        </table>
+    </div>
+    </div>
+    </body>
+
+</html>

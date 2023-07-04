@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+{% extends "base.html" %}
+{% block content %}
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>시온 출석 | 대문</title>
+
+    <script type="text/javascript">
+
+
+
+    </script>
+
+    <style type="text/css">
+    @import url(https://fonts.googleapis.com/css?family=BenchNine:700);
+            .snip1535 {
+              background-color: #0eafe7;
+              border: none;
+              color: #ffffff;
+              cursor: pointer;
+              display: inline-block;
+              font-family: 'BenchNine', Arial, sans-serif;
+              font-size: 1em;
+              font-size: 22px;
+              line-height: 1em;
+              margin: 15px 40px;
+              outline: none;
+              padding: 12px 40px 10px;
+              position: relative;
+              text-transform: uppercase;
+              font-weight: 700;
+            }
+            .snip1535:before,
+            .snip1535:after {
+              border-color: transparent;
+              -webkit-transition: all 0.25s;
+              transition: all 0.25s;
+              border-style: solid;
+              border-width: 0;
+              content: "";
+              height: 24px;
+              position: absolute;
+              width: 24px;
+            }
+            .snip1535:before {
+              border-color: #0eafe7;
+              border-right-width: 2px;
+              border-top-width: 2px;
+              right: -5px;
+              top: -5px;
+            }
+            .snip1535:after {
+              border-bottom-width: 2px;
+              border-color: #0eafe7;
+              border-left-width: 2px;
+              bottom: -5px;
+              left: -5px;
+            }
+            .snip1535:hover,
+            .snip1535.hover {
+              background-color: #0eafe7;
+            }
+            .snip1535:hover:before,
+            .snip1535.hover:before,
+            .snip1535:hover:after,
+            .snip1535.hover:after {
+              height: 100%;
+              width: 100%;
+            }
+            .btn{
+                position: relative;
+                background: linear-gradient(90deg, #06BFFF 0%, #2D73FF 100%);
+                border: none;
+                outline: none;
+                padding: 12px;
+                color: #fff;
+                font-size: 18px;
+                font-weight: 500;
+                font-family: inherit;
+                text-align: center;
+                letter-spacing: .03em;
+                cursor: pointer;
+                margin-top : auto;
+            }
+            .h1 {
+                position: fixed;
+                left: 20px;
+                top: 50px;
+                font-family: "Do Hyeon", sans-serif
+            }
+            .div{
+                position: fixed;
+<!--                left:20px;-->
+                top:50px;
+            }
+            hr {
+              width : 50%;
+              margin-left : auto;
+              margin-right : auto;
+            }
+
+            .hr-solid {
+              border : 0px;
+              border-top: 5px solid #a9a9a9;
+            }
+
+            .hr-dotted {
+              border : 0px;
+              border-top: 5px dotted #a9a9a9;
+            }
+
+            .hr-dashed {
+              border : 0px;
+              border-top: 5px dashed #a9a9a9;
+            }
+
+            a:link{ text-decoration:none;}
+            a:visited{ text-decoration:none;}
+            a:hover{ text-decoration:none;}
+            a:active{ text-decoration:none;}
+
+    </style>
+
+</head>
+<body>
+<!-- <div id="index_01">-->
+<!--        <div id="header1">좌우 슬라이딩</div>-->
+<!--        <div style="max-width: 100%; height: auto;" id="slide1" >-->
+<!--            <ul>-->
+<!--                <li><a href="#"><img style="max-width: 100%; height: auto;" src="/static/image/01.jpg" alt="슬라이드1"></a></li>-->
+<!--                <li><a href="#"><img style="max-width: 100%; height: auto;" src="/static/image/02.jpg" alt="슬라이드2"></a></li>-->
+<!--                <li><a href="#"><img style="max-width: 100%; height: auto;" src="/static/image/03.jpg" alt="슬라이드3"></a></li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div id="index_02">-->
+<!--        <div id="header2">상하 슬라이딩</div>-->
+<!--        <div style="max-width: 100%; height: auto;" id="slide2">-->
+<!--            <ul >-->
+<!--                <li><a href="#"><img style="max-width: 100%; height: auto;" src="/static/image/04.jpg" alt="슬라이드4"></a></li>-->
+<!--                <li><a href="#"><img style="max-width: 100%; height: auto;" src="/static/image/05.jpg" alt="슬라이드5"></a></li>-->
+<!--                <li><a href="#"><img style="max-width: 100%; height: auto;" src="/static/image/06.jpg" alt="슬라이드6"></a></li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--    </div>-->
+
+
+<div style="text-align : center;">
+        <span id="clock" style="color:gray;">clock</span>
+        <span id="apm" style="color:gray;"  >ampm</span>
+    </div>
+
+{% if session['username'] %}
+<div class ="container">
+    <br><br>
+
+    <div style="text-align : center;" id= userAuth></div>
+    <br>
+    <div style="text-align : center; display : flex;justify-content: center;">
+        <img  src="/static/image/icon2.png" width="24px" height ="24px" alt="시온청년부">
+        <h3 style="display : inline; font-size : 24px;"> 시온청년부 출석체크사이트</h3>
+    </div>
+    <br>
+        <div style="text-align: center;"><a class = "snip1535" href="{{ url_for('check') }}" >>> 출석체크 <<</a></div>
+        <div style="display : none; text-align: center;"><a class = "snip1535" href="{{ url_for('board') }}" >>> 자유게시판 <<</a></div>
+        <div style="text-align: center;"><a class = "snip1535" href="{{ url_for('missions') }}" >>> 선교팀 <<</a></div>
+    {% if session['username'] == 'test' %}
+        <div style="text-align: center;"><a class = "snip1535" href="{{ url_for('development') }}" >>> 유튜브 <<</a></div>
+    {% endif %}
+    <p style="text-align : center; font-size : 8px; color : #a9a9a9">환영합니다</p>
+    <p style="text-align : center; font-size : 8px; color : #a9a9a9"> made by ksh </p>
+</div>
+{% else %}
+<div>
+    <br><br>
+    <div style="text-align : center; display : flex;justify-content: center;">
+        <img  src="/static/image/icon2.png" width="24x" height ="24x" alt="시온청년부">
+        <h3 style="display : inline; font-size : 24px;"> 시온청년부 출석체크사이트</h3>
+    </div>
+    <br>
+    <p style="text-align : center;"> 서비스 이용에는 로그인이 필요합니다.</p>
+    <form class = "text-center">
+        <a class = "snip1535" href="{{ url_for('account.login') }}">>> 로그인 <<</a>
+        <div style="text-align: center;"><a class = "snip1535" href="{{ url_for('kakao') }}" >>> qr출석체크 <<</a></div>
+    </form>
+    <br>
+    <p style="text-align : center; font-size : 8px; color : #a9a9a9"> 가입문의는 서기에게 부탁드립니다.</p>
+    <p style="text-align : center; font-size : 8px; color : #a9a9a9"> made by ksh </p>
+</div>
+{% endif %}
+<!--<hr class='hr-dashed'/>-->
+ <div style="display : flex;">
+ <!-- * 카카오맵 - 지도퍼가기 -->
+    <!-- 1. 지도 노드 -->
+    <div style=" width: 50%; margin-left : auto; margin-right : auto;" id="daumRoughmapContainer1659971295506" class="root_daum_roughmap root_daum_roughmap_landing"></div>
+
+    <!--
+    2. 설치 스크립트
+    * 지도 퍼가기 서비스를 2개 이상 넣을 경우, 설치 스크립트는 하나만 삽입합니다.
+    -->
+    <script charset="UTF-8" class="daum_roughmap_loader_script" src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>
+
+    <!-- 3. 실행 스크립트 -->
+    <script charset="UTF-8">
+    new daum.roughmap.Lander({
+        "timestamp" : "1659971295506",
+        "key" : "2bb5a",
+        "mapHeight" : "300"
+    }).render();
+    </script>
+</div>
+
+
+</body>
+</html>
+{% endblock %}
+
