@@ -34,7 +34,34 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.1/ScrollToPlugin.min.js" integrity="sha512-kSI9CgGh60rJbNVeMJvfNX0UTKAq8LEOea/yKJQbFpIroxT7bf9/zUFXbnfsQP5F6xlOOHtCfBPgsE1ceiHnRw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <style type="text/css">
+body::-webkit-scrollbar {
+                width: 8px;  /* 스크롤바의 너비 */
+            }
 
+            body::-webkit-scrollbar-thumb {
+                height: 30%; /* 스크롤바의 길이 */
+                background: #343a40; /* 스크롤바의 색상 */
+                opacity : 20%;
+                border-radius: 10px;
+            }
+
+            body::-webkit-scrollbar-track {
+                background: ;  /*스크롤바 뒷 배경 색상*/
+            }
+            table+::-webkit-scrollbar {
+                width: 8px;  /* 스크롤바의 너비 */
+            }
+
+            table+::-webkit-scrollbar-thumb {
+                height: 30%; /* 스크롤바의 길이 */
+                background: #343a40; /* 스크롤바의 색상 */
+                opacity : 20%;
+                border-radius: 10px;
+            }
+
+            table+::-webkit-scrollbar-track {
+                background: ;  /*스크롤바 뒷 배경 색상*/
+            }
 * {
     font-family: "Do Hyeon", sans-serif;
      -webkit-touch-callout: none; /* iOS Safari */
@@ -103,8 +130,8 @@ a{
 a:hover { color: green; }
 * {padding:0;margin:0;}
 input[id="menuicon"] {left : -30px; display:none;}
-input[id="menuicon"] + ul {z-index:8;display:block;position:fixed;left:-65px;top:95%;transform:translateY(-50%);transition:all .35s;text-align:right;}
-input[id="menuicon"] + ul :hover{left:32px;}
+input[id="menuicon"] + ul {z-index:5;display:block;position:fixed;left:-50px;top:95%;transform:translateY(-50%);transition:all .35s;text-align:right;}
+input[id="menuicon"] + ul :hover{left:15px;}
 input[id="menuicon"] + ul > li {display:block;width:50px;height:50px;border:1px solid #565656;position:relative;margin-top:-1px;}
 input[id="menuicon"] + ul > li > a {display:block;width:auto;height:50px;overflow:hidden;transition:all .35s;}
 input[id="menuicon"] + ul > li > label {display:block;cursor:pointer;width:auto;height:50px;background:#343a40;}
@@ -127,7 +154,7 @@ input[id="menuicon"]:checked + ul + div {left:0;}
             <ul>
                 <li>
                     <label for="menuicon">
-                        <span style="c"></span><span></span><span></span>
+                        <span class="c"></span><span></span><span></span>
                     </label>
                 </li>
             </ul>
@@ -175,7 +202,7 @@ input[id="menuicon"]:checked + ul + div {left:0;}
   {% endwith %}
 
   <nav class="navbar site-header">
-    <div class="container">
+    <div class="container" style="z-index : 20;" >
         <div>
             <script >
                 date = new Date().toLocaleDateString();
@@ -201,9 +228,9 @@ input[id="menuicon"]:checked + ul + div {left:0;}
     </div>
 
   </nav>
-  <div id="goto-top">
-  <div class="material-icons">arrow_upward</div>
-</div>
+<!--  <div id="goto-top">-->
+<!--  <div class="material-icons">arrow_upward</div>-->
+<!--</div>-->
   {% block content %}{% endblock %}
  <script>
         var Target = document.getElementById("clock");

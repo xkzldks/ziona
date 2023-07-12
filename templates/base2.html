@@ -34,7 +34,34 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.1/ScrollToPlugin.min.js" integrity="sha512-kSI9CgGh60rJbNVeMJvfNX0UTKAq8LEOea/yKJQbFpIroxT7bf9/zUFXbnfsQP5F6xlOOHtCfBPgsE1ceiHnRw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <style type="text/css">
+            body::-webkit-scrollbar {
+                width: 8px;  /* 스크롤바의 너비 */
+            }
 
+            body::-webkit-scrollbar-thumb {
+                height: 30%; /* 스크롤바의 길이 */
+                background: #343a40; /* 스크롤바의 색상 */
+                opacity : 20%;
+                border-radius: 10px;
+            }
+
+            body::-webkit-scrollbar-track {
+                background: ;  /*스크롤바 뒷 배경 색상*/
+            }
+            table+::-webkit-scrollbar {
+                width: 8px;  /* 스크롤바의 너비 */
+            }
+
+            table+::-webkit-scrollbar-thumb {
+                height: 30%; /* 스크롤바의 길이 */
+                background: #343a40; /* 스크롤바의 색상 */
+                opacity : 20%;
+                border-radius: 10px;
+            }
+
+            table+::-webkit-scrollbar-track {
+                background: ;  /*스크롤바 뒷 배경 색상*/
+            }
 * {
     font-family: "Do Hyeon", sans-serif;
      -webkit-touch-callout: none; /* iOS Safari */
@@ -110,8 +137,8 @@ container{
     </div>
 
   </nav>
-  <div id="goto-top">
-  <div class="material-icons">arrow_upward</div>
+<!--  <div id="goto-top">-->
+<!--  <div class="material-icons">arrow_upward</div>-->
 </div>
   {% block content %}{% endblock %}
  <script>

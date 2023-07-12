@@ -457,7 +457,7 @@
                             let count = reviews[i]['count']
                             let temp_html = "<tr>"+
                                                 "<td class = 'tdz' style='text-align : center;'>"+year+"</td>"+
-                                                "<td href = '#' id = "+title+" onclick = getChul("+Number(title)+") class = 'tdz' style='text-align : center; color: blue; text-decoration: underline;'>"+title+"</td>"+
+                                                "<td href = '#' id = "+title+" onclick = getChul("+Number(title)+") class = 'tdz' style='text-align : center; color: olivedrab; text-decoration: underline;'>"+title+"</td>"+
                                                 "<td class = 'tdz' style= 'text-align : center; word-break: keep-all;'>"+review+"</td>"+
                                                 "<td class = 'tdz' style='text-align : center;'>"+count+"</td>"+
                                             "</tr>"
@@ -963,6 +963,8 @@
         }
     </script>
     <style type="text/css">
+
+
             label{
                 color : #335017;
             }
@@ -1005,7 +1007,6 @@
                 position:relative;
                 top:1px;
             }
-
 	        .myButtonDelDB {
                 box-shadow:inset 0px 1px 0px 0px #cf866c;
                 background:linear-gradient(to bottom, #ff3700 5%, #bc3315 100%);
@@ -1141,16 +1142,53 @@
             .thz{
                 z-index: 3;
                 border-top: 0px solid #dee2e6;
+                color : white;
             }
             .tdz{
                 z-index: -3;
+                color: white;
             }
-
+            .td {color: white;
+            }
             .c {
                 word-break: break-all;
                 word-wrap: normal;
               }
+            input[id="sideButton"] {right : -20px; display:none;}
+            input[id="sideButton"] + ul {z-index:8;display:block;position:fixed;right:-20px;top:70%;transform:translateY(-50%);transition:all .35s;text-align:right;}
+            input[id="sideButton"] + ul :hover{right:20px;}
+            input[id="sideButton"] + ul > li {display:block;width:50px;height:50px;border:1px solid #565656;position:relative;margin-top:-1px;}
+            input[id="sideButton"] + ul > li > a {display:block;width:auto;height:50px;overflow:hidden;transition:all .35s;}
+            input[id="sideButton"] + ul > li > label {display:block;cursor:pointer;width:auto;height:50px;background:#343a40;}
+            input[id="sideButton"] + ul > li:nth-child(1) label span {display:block;position:absolute;width:50%;height:3px;border-radius:30px;background:#e9e9e9;transition:all .35s;}
+            input[id="sideButton"] + ul > li:nth-child(1) label span:nth-child(1) {top:30%;left:50%;transform:translateX(-50%);}
+            input[id="sideButton"] + ul > li:nth-child(1) label span:nth-child(2) {top:50%;left:50%;transform:translate(-50%,-50%);}
+            input[id="sideButton"] + ul > li:nth-child(1) label span:nth-child(3) {bottom:30%;left:50%;transform:translateX(-50%);}
+            input[id="sideButton"]:checked + ul {z-index:10;}
+            input[id="sideButton"]:checked + ul > li:nth-child(1) label {z-index:10;left:0px;}
+            input[id="sideButton"]:checked + ul > li:nth-child(1) label span:nth-child(1) {top:50%;left:50%;transform:translate(-50%,-50%) rotate(45deg);}
+            input[id="sideButton"]:checked + ul > li:nth-child(1) label span:nth-child(2) {opacity:0;}
+            input[id="sideButton"]:checked + ul > li:nth-child(1) label span:nth-child(3) {bottom:50%;left:50%;transform:translate(-50%,50%) rotate(-45deg);}
+            div[class="sidebar2"] {width:100%; height:100%; background:#343a40; position:fixed;top:0%;right:-100%;z-index:7;transition:all .35s;}
+            input[id="sideButton"]:checked + ul + div {right:0px;}
 
+<!--            input[id="sideButton"] {right : -20px; display:none;}-->
+<!--            input[id="sideButton"] + ul {z-index:8;display:block;position:fixed;right:-20px;top:70%;transform:translateY(-50%);transition:all .35s;text-align:right;}-->
+<!--            input[id="sideButton"] + ul :hover{right:20px;}-->
+<!--            input[id="sideButton"] + ul > li {display:block;width:50px;height:50px;border:1px solid #565656;position:relative;margin-top:-1px;}-->
+<!--            input[id="sideButton"] + ul > li > a {display:block;width:auto;height:50px;overflow:hidden;transition:all .35s;}-->
+<!--            input[id="sideButton"] + ul > li > label {display:block;cursor:pointer;width:auto;height:50px;background:#343a40;}-->
+<!--            input[id="sideButton"] + ul > li:nth-child(1) label span {display:block;position:absolute;width:50%;height:3px;border-radius:30px;background:#e9e9e9;transition:all .35s;}-->
+<!--            input[id="sideButton"] + ul > li:nth-child(1) label span:nth-child(1) {top:30%;left:50%;transform:translateX(-50%);}-->
+<!--            input[id="sideButton"] + ul > li:nth-child(1) label span:nth-child(2) {top:50%;left:50%;transform:translate(-50%,-50%);}-->
+<!--            input[id="sideButton"] + ul > li:nth-child(1) label span:nth-child(3) {bottom:30%;left:50%;transform:translateX(-50%);}-->
+<!--            input[id="sideButton"]:checked + ul {z-index:10;}-->
+<!--            input[id="sideButton"]:checked + ul > li:nth-child(1) label {z-index:10;left:0px;}-->
+<!--            input[id="sideButton"]:checked + ul > li:nth-child(1) label span:nth-child(1) {top:50%;left:50%;transform:translate(-50%,-50%) rotate(45deg);}-->
+<!--            input[id="sideButton"]:checked + ul > li:nth-child(1) label span:nth-child(2) {opacity:0;}-->
+<!--            input[id="sideButton"]:checked + ul > li:nth-child(1) label span:nth-child(3) {bottom:50%;left:50%;transform:translate(-50%,50%) rotate(-45deg);}-->
+<!--            div[class="sidebar2"] {width:100%; height:100%; background:#343a40; position:fixed;top:0%;right:-100%;z-index:7;transition:all .35s;}-->
+<!--            input[id="sideButton"]:checked + ul + div {right:0px;}-->
     </style>
 </head>
 
@@ -1168,8 +1206,33 @@
 <!--            </tr>-->
 <!--        </table>-->
 <!--    </A>-->
-
+<input type="checkbox" id="sideButton">
+<ul>
+    <li>
+        <label for="sideButton">
+            <span class="c"></span><span></span><span></span>
+        </label>
+    </li>
+</ul>
+<div style="display : flex;  font-size : 20px;flex-direction: column;justify-content: center;align-items: center;" class= "sidebar2">
+    <div style="color : white;">시온 출석명단</div>
+    <div style="width:90%; height:800px; overflow:auto; border-collapse:collapse; " class="reviews">
+        <table width="100%" cellspacing="0" cellpadding="0" class="table">
+            <thead class = "thz" style="background-color : #343a40;  position: sticky; top: 0px;">
+                <tr style="border-style: hidden;">
+                    <th class = "thz" style="text-align : center; width : 10%;" id = "td1" scope="col">년도</th>
+                    <th class = "thz" style="text-align : center; width : 10%;" id = "td2" scope="col">날짜</th>
+                    <th class = "thz" style="text-align : center; width : 50%;" id = "td3" scope="col">명단</th>
+                    <th class = "thz" style="text-align : center; width : 30%;" id = "td4" scope="col">인원</th>
+                </tr>
+            </thead>
+            <tbody class="tdz" id="reviews-box" style="border-style: hidden;">
+            </tbody>
+        </table>
+    </div>
+</div>
     <div class="container">
+
 <!--        <input type="checkbox" id="menuicon">-->
 <!--            <ul>-->
 <!--                <li>-->
@@ -1335,20 +1398,20 @@
                 <label id='result'></label>
 
             </div><br>
-        <div style="width:100%; height:800px; overflow:auto; border-collapse:collapse; " class="reviews">
-            <table width="100%" cellspacing="0" cellpadding="0" class="table">
-                <thead class = "thz" style="background-color : #ffd8d8; position: sticky; top: 0px;">
-                <tr>
-                    <th class = "thz" style="text-align : center; width : 10%;" id = "td1" scope="col">년도</th>
-                    <th class = "thz" style="text-align : center; width : 10%;" id = "td2" scope="col">날짜</th>
-                    <th class = "thz" style="text-align : center; width : 50%;" id = "td3" scope="col">명단</th>
-                    <th class = "thz" style="text-align : center; width : 30%;" id = "td4" scope="col">인원</th>
-                </tr>
-                </thead>
-                <tbody class="tdz" id="reviews-box">
-                </tbody>
-            </table>
-        </div>
+<!--        <div style="width:100%; height:800px; overflow:auto; border-collapse:collapse; " class="reviews">-->
+<!--            <table width="100%" cellspacing="0" cellpadding="0" class="table">-->
+<!--                <thead class = "thz" style="background-color : #ffd8d8; position: sticky; top: 0px;">-->
+<!--                <tr>-->
+<!--                    <th class = "thz" style="text-align : center; width : 10%;" id = "td1" scope="col">년도</th>-->
+<!--                    <th class = "thz" style="text-align : center; width : 10%;" id = "td2" scope="col">날짜</th>-->
+<!--                    <th class = "thz" style="text-align : center; width : 50%;" id = "td3" scope="col">명단</th>-->
+<!--                    <th class = "thz" style="text-align : center; width : 30%;" id = "td4" scope="col">인원</th>-->
+<!--                </tr>-->
+<!--                </thead>-->
+<!--                <tbody class="tdz" id="reviews-box">-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </div>-->
         </div>
         <br>
         <hr>
